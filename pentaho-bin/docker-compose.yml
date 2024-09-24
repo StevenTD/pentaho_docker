@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  pentaho_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - pentaho_data_bin:/home/pentaho/Pentaho
+    #  - ./pentaho-server:/home/ubuntu/pentaho/pentaho-server
+
+    environment:
+      JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
+    #command: ["sh", "-c", "./start-pentaho.sh && tail -f /dev/null"]
+
+
+volumes:
+  pentaho_data_bin:
