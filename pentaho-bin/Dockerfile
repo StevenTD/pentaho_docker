@@ -44,6 +44,26 @@ RUN if [ ! -d "/home/pentaho/Pentaho" ]; then \
     fi
 
 
+# Add environment variable to control activation process
+ENV ENABLE_CDE_ACTIVATION=true
+
+# Copy plugin and settings files to a temporary location
+COPY ./plugin.xml /tmp/
+COPY ./settings.xml /tmp/
+
+# Conditionally copy the plugin and settings files if ENABLE_CDE_ACTIVATION is true
+RUN if [ "$ENABLE_CDE_ACTIVATION" = "true" ]; then \
+      echo "Activating CDE features..." && \
+      cp -f /tmp/plugin.xml /home/pentaho/Pentaho/server/pentaho-server/pentaho-solutions/system/pentaho-cdf-dd/plugin.xml && \
+      cp -f /tmp/settings.xml /home/pentaho/Pentaho/server/pentaho-server/pentaho-solutions/system/pentaho-cdf-dd/settings.xml; \
+    else \
+      echo "Skipping CDE activation"; \
+    fi
+
+
+# Expose Pentaho default port
+EXPOSE 8080
+
 
 # Set the entry point to ensure Pentaho server is started
 CMD /home/pentaho/Pentaho/ctlscript.sh start && tail -f /dev/null
