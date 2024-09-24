@@ -1,2 +1,6 @@
 1. Put pentaho ce 9.4 zip file here.
 2. unzip.
+
+For .bin version
+1. Get a copy of "pentaho-business-analytics-9.3.0.0-428-x64.bin" and copy it inside "pentaho-bin".
+2. cd to "pentaho-bin" folder and run docker compose there.
